@@ -15,10 +15,11 @@ export function ApiStack({ stack }) {
       },
     },
     routes: {
-      "GET  /notes": "functions/list.main",
-      "POST /notes": "functions/create.main",
-      "GET  /notes/{id}": "functions/get.main",
-      "PUT  /notes/{id}": "functions/update.main",
+      "GET    /notes": "functions/list.main",
+      "POST   /notes": "functions/create.main",
+      "GET    /notes/{id}": "functions/get.main",
+      "PUT    /notes/{id}": "functions/update.main",
+      "DELETE /notes/{id}": "functions/delete.main",
     },
   });
 
