@@ -43,8 +43,18 @@ export default function Signup() {
       setIsLoading(false);
       setNewUser(newUser);
     } catch (e) {
-      onError(e);
       setIsLoading(false);
+
+      if (e.code === "UsernameExistsException") {
+        try {
+          await Auth.resendSignUp(fields.email);
+          setNewUser({ username: fields.email, password: fields.password });
+        } catch (e2) {
+          onError(e2);
+        }
+      } else {
+        onError(e);
+      }
     }
   }
 
