@@ -1,5 +1,6 @@
+import { Auth } from "aws-amplify";
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
@@ -9,47 +10,65 @@ import Routes from "./Routes";
 
 function App() {
   const [isAuthenticated, setUserIsAuthenticated] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
+  async function onLoad() {
+    try {
+      await Auth.currentSession();
+      setUserIsAuthenticated(true);
+    } catch (error) {
+      if (error !== "No current user") alert(error);
+    }
+
+    setIsAuthenticating(false);
+  }
 
   function handleLogout() {
     setUserIsAuthenticated(false);
   }
 
   return (
-    <div className="App container py-3">
-      <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
-        <LinkContainer to="/">
-          <Navbar.Brand className="font-weight-bold text-muted">
-            Scratch
-          </Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
-          <Nav activeKey={window.location.pathname}>
-            {isAuthenticated ? (
-              <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
-            ) : (
-              <>
-                <LinkContainer to="/signup">
-                  <Nav.Link>Signup</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
-                </LinkContainer>
-              </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+    !isAuthenticating && (
+      <div className="App container py-3">
+        <Navbar collapseOnSelect bg="light" expand="md" className="mb-3">
+          <LinkContainer to="/">
+            <Navbar.Brand className="font-weight-bold text-muted">
+              Scratch
+            </Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-end">
+            <Nav activeKey={window.location.pathname}>
+              {isAuthenticated ? (
+                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+              ) : (
+                <>
+                  <LinkContainer to="/signup">
+                    <Nav.Link>Signup</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/login">
+                    <Nav.Link>Login</Nav.Link>
+                  </LinkContainer>
+                </>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
 
-      <AppContext.Provider
-        value={{
-          isAuthenticated,
-          setUserIsAuthenticated,
-        }}
-      >
-        <Routes />
-      </AppContext.Provider>
-    </div>
+        <AppContext.Provider
+          value={{
+            isAuthenticated,
+            setUserIsAuthenticated,
+          }}
+        >
+          <Routes />
+        </AppContext.Provider>
+      </div>
+    )
   );
 }
 
