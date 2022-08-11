@@ -7,6 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
 import { AppContext } from "./lib/contextLib";
+import { onError } from "./lib/errorLib";
 import Routes from "./Routes";
 
 function App() {
@@ -24,7 +25,7 @@ function App() {
       await Auth.currentSession();
       setUserIsAuthenticated(true);
     } catch (error) {
-      if (error !== "No current user") alert(error);
+      if (error !== "No current user") onError(error);
     }
 
     setIsAuthenticating(false);
