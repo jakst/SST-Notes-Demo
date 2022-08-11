@@ -2,10 +2,12 @@ import { Auth } from "aws-amplify";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../lib/contextLib";
 import "./Login.css";
 
 export default function Login() {
+  const navigate = useNavigate();
   const { setUserIsAuthenticated } = useAppContext();
 
   const [email, setEmail] = useState("");
@@ -21,6 +23,7 @@ export default function Login() {
     try {
       await Auth.signIn(email, password);
       setUserIsAuthenticated(true);
+      navigate("/");
     } catch (e) {
       alert(e.message);
     }

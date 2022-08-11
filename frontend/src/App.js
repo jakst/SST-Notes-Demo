@@ -4,11 +4,14 @@ import React, { useEffect, useState } from "react";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import { AppContext } from "./lib/contextLib";
 import Routes from "./Routes";
 
 function App() {
+  const navigate = useNavigate();
+
   const [isAuthenticated, setUserIsAuthenticated] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
@@ -31,6 +34,8 @@ function App() {
     await Auth.signOut();
 
     setUserIsAuthenticated(false);
+
+    navigate("/");
   }
 
   return (
