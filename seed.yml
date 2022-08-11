@@ -1,4 +1,3 @@
-check_code_change: pnpm
 before_build:
   - echo 'export CI=false' >> $BASH_ENV
-  - cd frontend && pnpm install
+  - cd frontend && npm install
