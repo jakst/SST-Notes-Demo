@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import AuthenticatedRoute from "./components/AuthenticatedRoutes";
+import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 import NewNote from "./containers/NewNote";
@@ -12,11 +14,46 @@ export default function Links() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/notes/new" element={<NewNote />} />
-      <Route path="/notes/:id" element={<Notes />} />
-      <Route path="/settings" element={<Settings />} />
+      <Route
+        path="/login"
+        element={
+          <UnauthenticatedRoute>
+            <Login />
+          </UnauthenticatedRoute>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <UnauthenticatedRoute>
+            <Signup />
+          </UnauthenticatedRoute>
+        }
+      />
+      <Route
+        path="/notes/new"
+        element={
+          <AuthenticatedRoute>
+            <NewNote />
+          </AuthenticatedRoute>
+        }
+      />
+      <Route
+        path="/notes/:id"
+        element={
+          <AuthenticatedRoute>
+            <Notes />
+          </AuthenticatedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <AuthenticatedRoute>
+            <Settings />
+          </AuthenticatedRoute>
+        }
+      />
       <Route path="*" element={<NotFound />} />;
     </Routes>
   );
