@@ -1,5 +1,5 @@
 import { API } from "aws-amplify";
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { BsPencilSquare } from "react-icons/bs";
 import { LinkContainer } from "react-router-bootstrap";
@@ -15,10 +15,13 @@ export default function Home() {
   const [notes, setNotes] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
+  const hasInitiated = createRef(false);
 
   useEffect(() => {
     async function onLoad() {
-      if (!isAuthenticated) return;
+      if (!isAuthenticated || hasInitiated.current || notes.length > 0) return;
+
+      hasInitiated.current = true;
 
       try {
         const notes = await loadNotes();
@@ -31,7 +34,7 @@ export default function Home() {
     }
 
     onLoad();
-  }, [isAuthenticated]);
+  }, [hasInitiated, isAuthenticated, isLoading, notes.length]);
 
   function renderNotesList(notes) {
     return (
