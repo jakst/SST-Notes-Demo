@@ -1,6 +1,9 @@
 # dependencies
 node_modules
 
+# CRA
+frontend/build
+
 # sst
 .sst
 .build
