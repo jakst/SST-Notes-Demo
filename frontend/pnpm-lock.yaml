@@ -2,6 +2,8 @@ lockfileVersion: 5.4
 
 specifiers:
   '@serverless-stack/static-site-env': ^1.6.1
+  '@stripe/react-stripe-js': ^1.10.0
+  '@stripe/stripe-js': ^1.35.0
   '@testing-library/jest-dom': ^5.16.4
   '@testing-library/react': ^13.3.0
   '@testing-library/user-event': ^13.5.0
@@ -17,6 +19,8 @@ specifiers:
   web-vitals: ^2.1.4
 
 dependencies:
+  '@stripe/react-stripe-js': 1.10.0_cmmhtrb5rpqnadm4cijrsi2esq
+  '@stripe/stripe-js': 1.35.0
   '@testing-library/jest-dom': 5.16.4
   '@testing-library/react': 13.3.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 13.5.0_gwcpuyfvwbszhlmedmugzivgzu
@@ -4348,6 +4352,23 @@ packages:
     resolution: {integrity: sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==}
     dependencies:
       '@sinonjs/commons': 1.8.3
+    dev: false
+
+  /@stripe/react-stripe-js/1.10.0_cmmhtrb5rpqnadm4cijrsi2esq:
+    resolution: {integrity: sha512-vuIjJUZJ3nyiaGa5z5iyMCzZfGGsgzOOjWjqknbbhkNsewyyginfeky9EZLSz9+iSAsgC9K6MeNOTLKVGcMycQ==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.34.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@stripe/stripe-js': 1.35.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@stripe/stripe-js/1.35.0:
+    resolution: {integrity: sha512-UIuzpbJqgXCTvJhY/aZYvBtaKdMfQgnIv6kkLlfRJ9smZcC4zoPvq3j7k9wobYI+idHAWP4BRiPnqA8lvzJCtg==}
     dev: false
 
   /@surma/rollup-plugin-off-main-thread/2.2.3:
