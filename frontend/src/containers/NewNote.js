@@ -1,11 +1,21 @@
+import { API } from "aws-amplify";
 import React, { useRef, useState } from "react";
 import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
+import { onError } from "../lib/errorLib";
 import "./NewNote.css";
+
+function createNote(note) {
+  return API.post("notes", "/notes", {
+    body: note,
+  });
+}
 
 export default function NewNote() {
   const file = useRef(null);
+  const navigate = useNavigate();
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,6 +40,14 @@ export default function NewNote() {
     }
 
     setIsLoading(true);
+
+    try {
+      await createNote({ content });
+      navigate("/");
+    } catch (e) {
+      onError(e);
+      setIsLoading(false);
+    }
   }
 
   return (
