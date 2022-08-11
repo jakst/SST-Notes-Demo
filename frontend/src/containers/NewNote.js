@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
+import { s3Upload } from "../lib/awsLib";
 import { onError } from "../lib/errorLib";
 import "./NewNote.css";
 
@@ -42,7 +43,9 @@ export default function NewNote() {
     setIsLoading(true);
 
     try {
-      await createNote({ content });
+      const attachment = file.current ? await s3Upload(file.current) : null;
+
+      await createNote({ content, attachment });
       navigate("/");
     } catch (e) {
       onError(e);
