@@ -18,6 +18,10 @@ function saveNote(id, note) {
   });
 }
 
+function deleteNote(id) {
+  return API.del("notes", `/notes/${id}`);
+}
+
 export default function Notes() {
   const navigate = useNavigate();
   const file = useRef(null);
@@ -91,6 +95,7 @@ export default function Notes() {
       setIsLoading(false);
     }
   }
+
   async function handleDelete(event) {
     event.preventDefault();
 
@@ -98,11 +103,18 @@ export default function Notes() {
       "Are you sure you want to delete this note?"
     );
 
-    if (!confirmed) {
-      return;
-    }
+    if (!confirmed) return;
 
     setIsDeleting(true);
+
+    try {
+      await deleteNote(id);
+      if (note.attachment) await Storage.vault.remove(note.attachment);
+      navigate("/");
+    } catch (e) {
+      onError(e);
+      setIsDeleting(false);
+    }
   }
 
   return (
