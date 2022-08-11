@@ -60,7 +60,7 @@ export default function Notes() {
   }
 
   async function handleSubmit(event) {
-    let attachment;
+    let attachment = note.attachment;
 
     event.preventDefault();
 
@@ -78,11 +78,12 @@ export default function Notes() {
     try {
       if (file.current) {
         attachment = await s3Upload(file.current);
+        if (note.attachment) await Storage.vault.remove(note.attachment);
       }
 
       await saveNote(id, {
         content,
-        attachment: attachment || note.attachment,
+        attachment,
       });
       navigate("/");
     } catch (e) {
